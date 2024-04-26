@@ -1,9 +1,8 @@
 package com.ykotsiuba.clear_solution_test.dto;
 
 import com.ykotsiuba.clear_solution_test.configuration.validation.annotations.ValidBirthDate;
+import com.ykotsiuba.clear_solution_test.configuration.validation.annotations.ValidPatch;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,16 +15,14 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaveUserRequestDTO {
+@ValidPatch
+public class PatchUserRequestDTO {
 
-    @NotBlank(message = "email required")
     @Email(message = "email not valid")
     private String email;
 
-    @NotBlank(message = "first name required")
     private String firstName;
 
-    @NotBlank(message = "last name required")
     private String lastName;
 
     private String address;
@@ -33,7 +30,6 @@ public class SaveUserRequestDTO {
     @Pattern(regexp = "\\+380\\d{9}", message = "phone not valid")
     private String phone;
 
-    @NotNull(message = "birth date required")
     @ValidBirthDate
     private LocalDate birthDate;
 }
