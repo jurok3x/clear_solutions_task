@@ -11,9 +11,10 @@ import javax.sql.DataSource;
 public class DBConfiguration {
 
     @Bean
-    public DataSource postgresDataSource() {
+    public DataSource h2DataSource() {
         final DataSource dataSource = new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
+                .addScript("classpath:/db/users/drop.sql")
                 .addScript("classpath:/db/users/schema.sql")
                 .addScript("classpath:/db/users/data.sql")
                 .build();
