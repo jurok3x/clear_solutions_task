@@ -108,7 +108,7 @@ class UserControllerTest {
 
     @Test
     @Transactional
-    public void testSaveArticle_invalidDateOfBirth() throws Exception {
+    public void testSaveUser_invalidDateOfBirth() throws Exception {
         SaveUserRequestDTO requestDTO = prepareSaveUserRequest();
         requestDTO.setBirthDate(LocalDate.now().minus(15, ChronoUnit.YEARS));
         String body = DEFAULT_MAPPER.writeValueAsString(requestDTO);
@@ -124,7 +124,7 @@ class UserControllerTest {
         String response = mvcResult.getResponse().getContentAsString();
         APIException responseDTO = DEFAULT_MAPPER.readValue(response, APIException.class);
         String error = responseDTO.getErrors().get(0);
-        assertEquals(String.format("User should have minimum %d years", minimumAge), error);
+        assertEquals("invalid date of birth", error);
     }
 
     @Test
