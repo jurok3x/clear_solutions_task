@@ -42,26 +42,15 @@ public class UserServiceImpl implements UserService {
         DEFAULT_MAPPER = mapper;
     }
 
-    @Value("${minimum.age}")
-    private Integer minimumAge;
-
     private final UserRepository userRepository;
 
     private final UserMapper userMapper;
 
     @Override
     public UserDTO save(SaveUserRequestDTO requestDTO) {
-        validateUserAge(requestDTO);
         User user = userMapper.fromSaveRequestToEntity(requestDTO);
         User savedUser = userRepository.save(user);
         return userMapper.fromEntityToDTO(savedUser);
-    }
-
-    private void validateUserAge(SaveUserRequestDTO requestDTO) {
-        LocalDate minimumDate = LocalDate.now().minus(minimumAge, ChronoUnit.YEARS);
-        if(!requestDTO.getBirthDate().isBefore(minimumDate)) {
-            throw new IllegalArgumentException(String.format("User should have minimum %d years", minimumAge));
-        }
     }
 
     @Override
